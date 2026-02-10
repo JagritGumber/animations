@@ -24,7 +24,7 @@ const BigTime = () => {
   }, []);
   return (
     <div className="h-full flex items-center justify-center">
-      <div className="text-[8vw] font-bold leading-none tracking-tighter">
+      <div className="text-[8vw] font-bold leading-none tracking-tighter text-[#CCFF00]">
         {time.toLocaleTimeString([], {
           hour12: false,
           hour: "2-digit",
@@ -49,9 +49,9 @@ const RollingText = () => {
             className={
               i % 2 === 0
                 ? "text-white"
-                : "text-transparent stroke-white stroke-1"
+                : "text-transparent stroke-[#FF00FF] stroke-1"
             }
-            style={{ WebkitTextStroke: i % 2 !== 0 ? "1px white" : "" }}
+            style={{ WebkitTextStroke: i % 2 !== 0 ? "1px #FF00FF" : "" }}
           >
             KINETIC
           </div>
@@ -62,18 +62,26 @@ const RollingText = () => {
 };
 
 const HoverReveal = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsHovered((prev) => !prev);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <motion.div
       className="h-full w-full bg-white text-black flex items-center justify-center font-bold text-4xl cursor-pointer"
       initial="rest"
-      whileHover="hover"
-      animate="rest"
+      animate={isHovered ? "hover" : "rest"}
     >
       <motion.span variants={{ rest: { y: 0 }, hover: { y: -50, opacity: 0 } }}>
         HOVER
       </motion.span>
       <motion.span
-        className="absolute"
+        className="absolute text-[#FF00FF]"
         variants={{ rest: { y: 50, opacity: 0 }, hover: { y: 0, opacity: 1 } }}
       >
         REVEAL
@@ -84,13 +92,27 @@ const HoverReveal = () => {
 
 const TypeGrid = () => {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % 24);
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="h-full grid grid-cols-6 grid-rows-4 gap-1">
       {[...Array(24)].map((_, i) => (
         <motion.div
           key={i}
-          className="flex items-center justify-center font-mono text-xs border border-zinc-800 text-zinc-500 hover:bg-white hover:text-black transition-colors"
-          whileHover={{ scale: 1.2, zIndex: 10 }}
+          className="flex items-center justify-center font-mono text-xs border border-zinc-800 text-zinc-500 transition-colors"
+          animate={{
+            scale: i === activeIndex ? 1.2 : 1,
+            zIndex: i === activeIndex ? 10 : 1,
+            backgroundColor: i === activeIndex ? "#CCFF00" : "rgba(0,0,0,0)",
+            color: i === activeIndex ? "#000000" : "#71717a",
+          }}
         >
           {chars[i % chars.length]}
         </motion.div>
@@ -100,14 +122,29 @@ const TypeGrid = () => {
 };
 
 const StretchingText = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % 4);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="h-full flex flex-col justify-between">
       {["DESIGN", "IS", "NOT", "ART"].map((word, i) => (
         <motion.div
           key={i}
-          className="text-4xl font-bold leading-none w-full bg-white text-black px-2"
+          className={`text-4xl font-bold leading-none w-full ${
+            i === 0
+              ? "bg-[#FF00FF] text-white"
+              : i === 2
+                ? "bg-[#CCFF00] text-black"
+                : "bg-white text-black"
+          } px-2`}
           initial={{ scaleX: 1 }}
-          whileHover={{ scaleX: 1.5, originX: 0 }}
+          animate={{ scaleX: i === activeIndex ? 1.5 : 1, originX: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 10 }}
         >
           {word}

@@ -23,9 +23,9 @@ const Box = ({ children, className = "" }: BoxProps) => (
 
 const BouncingBall = () => {
   return (
-    <div className="h-full w-full flex items-center justify-center bg-yellow-300 relative overflow-hidden">
+    <div className="h-full w-full flex items-center justify-center bg-[#FFD700] relative overflow-hidden">
       <motion.div
-        className="w-16 h-16 bg-red-500 rounded-full border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+        className="w-16 h-16 bg-[#FF0000] rounded-full border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
         animate={{
           x: ["-50%", "150%", "-50%"],
           y: ["-50%", "150%", "-50%"],
@@ -44,7 +44,7 @@ const BouncingBall = () => {
 
 const AutoButton = () => {
   return (
-    <div className="h-full flex items-center justify-center bg-blue-300">
+    <div className="h-full flex items-center justify-center bg-[#00FFFF]">
       <motion.div
         animate={{
           scale: [1, 0.9, 1],
@@ -66,7 +66,7 @@ const AutoButton = () => {
 
 const AutoStack = () => {
   return (
-    <div className="h-full w-full relative flex items-center justify-center bg-pink-200">
+    <div className="h-full w-full relative flex items-center justify-center bg-[#FF69B4]">
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
@@ -93,7 +93,7 @@ const AutoStack = () => {
 
 const AutoEye = () => {
   return (
-    <div className="h-full bg-green-300 flex items-center justify-center gap-4">
+    <div className="h-full bg-[#32CD32] flex items-center justify-center gap-4">
       {[1, 2].map((i) => (
         <div
           key={i}
@@ -133,8 +133,9 @@ const Marquee = () => {
 
 function App() {
   return (
-    <main className="min-h-screen bg-yellow-50 flex items-center justify-center p-8 font-sans selection:bg-black selection:text-white">
-      <div className="w-full max-w-4xl aspect-square md:aspect-video grid grid-cols-4 grid-rows-3 gap-4">
+    <main className="min-h-screen bg-[#FFFF00] flex items-center justify-center p-8 font-sans selection:bg-black selection:text-white relative">
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_black_2px,_transparent_2.5px)] [background-size:20px_20px] pointer-events-none" />
+      <div className="w-full max-w-4xl aspect-square md:aspect-video grid grid-cols-4 grid-rows-3 gap-4 relative z-10">
         <Box className="col-span-1 row-span-1 p-0!">
           <BouncingBall />
         </Box>
@@ -148,7 +149,7 @@ function App() {
         <Box className="col-span-2 row-span-1 p-0!">
           <AutoEye />
         </Box>
-        <Box className="col-span-1 row-span-1 flex items-center justify-center bg-purple-300">
+        <Box className="col-span-1 row-span-1 flex items-center justify-center bg-[#9370DB]">
           <motion.div
             animate={{ rotate: 360, scale: [1, 1.5, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
