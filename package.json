@@ -2,13 +2,15 @@
   "name": "animations",
   "type": "module",
   "scripts": {
-    "dev": "bun run main.ts",
-    "typecheck": "tsc"
+    "dev": "bun run --hot main.ts",
+    "start": "bun run main.ts",
+    "typecheck": "tsgo --noEmit"
   },
   "devDependencies": {
     "@types/bun": "1",
     "@types/react": "18",
     "@types/react-dom": "18",
+    "@typescript/native-preview": "^7.0.0-dev.20260210.1",
     "bun-plugin-tailwind": "0.1.2",
     "ffmpeg-static": "^5.3.0",
     "playwright": "^1.58.2",
@@ -18,6 +20,7 @@
   "dependencies": {
     "@elysiajs/static": "1",
     "elysia": "1",
+    "motion": "^12.34.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   }
