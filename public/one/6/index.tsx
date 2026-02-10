@@ -91,7 +91,7 @@ const Manifesto = () => (
       MADE VISIBLE.
     </h2>
     <div className="space-y-4">
-      <p className="text-sm font-medium opacity-80 max-w-[200px]">
+      <p className="text-sm font-medium opacity-80 max-w-200px">
         Rejection of decoration.
         <br />
         Mathematical grids.
@@ -173,7 +173,7 @@ const ToggleGrid = () => {
 const GeometricShapes = () => (
   <div className="h-full w-full relative flex items-center justify-center">
     <motion.div
-      className="absolute w-32 h-32 border-[20px] border-current rounded-full"
+      className="absolute w-32 h-32 border-20px border-current rounded-full"
       animate={{ rotate: 360, scale: [1, 1.1, 1] }}
       transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
     />
