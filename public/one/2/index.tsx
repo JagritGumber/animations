@@ -186,15 +186,15 @@ const RotatingTypography = () => {
 function App() {
   return (
     <main className="min-h-screen bg-[#e8e8e8] flex items-center justify-center p-8 font-sans text-black">
-      <div className="w-full max-w-4xl aspect-square md:aspect-[4/3] grid grid-cols-4 grid-rows-3 gap-4">
+      <div className="w-full max-w-4xl aspect-square md:aspect-4/ grid grid-cols-4 grid-rows-3 gap-4">
         {/* Row 1 */}
-        <Box className="col-span-1 row-span-1 bg-white !p-0">
+        <Box className="col-span-1 row-span-1 bg-white p-0!">
           <div className="p-4 h-full flex flex-col justify-between">
             <div className="text-xs font-mono">GRID.SYS</div>
             <ShiftingGrid />
           </div>
         </Box>
-        <Box className="col-span-2 row-span-1 bg-white !p-0">
+        <Box className="col-span-2 row-span-1 bg-white p-0!">
           <OrbitingSatellite />
         </Box>
         <Box className="col-span-1 row-span-2 bg-[#f0f0f0]">
@@ -222,7 +222,7 @@ function App() {
         </Box>
 
         {/* Row 3 */}
-        <Box className="col-span-1 row-span-1 bg-white !p-0">
+        <Box className="col-span-1 row-span-1 bg-white p-0!">
           <MondrianShift />
         </Box>
         <Box className="col-span-1 row-span-1 bg-white flex items-center justify-center">

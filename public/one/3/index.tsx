@@ -174,7 +174,7 @@ function App() {
         </Box>
 
         {/* Row 3 */}
-        <Box className="col-span-1 row-span-1 !p-0">
+        <Box className="col-span-1 row-span-1 p-0!">
           <SlidingPanels />
         </Box>
         <Box className="col-span-1 row-span-1 flex items-center justify-center">
