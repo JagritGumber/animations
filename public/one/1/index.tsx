@@ -41,7 +41,13 @@ const SystemStatus = () => {
             <span className="w-8">{label}</span>
             <div className="flex-1 h-1 bg-zinc-800 overflow-hidden">
               <motion.div
-                className="h-full bg-zinc-600"
+                className={`h-full ${
+                  i === 0
+                    ? "bg-rose-500"
+                    : i === 1
+                      ? "bg-amber-500"
+                      : "bg-emerald-500"
+                }`}
                 initial={{ width: "0%" }}
                 animate={{ width: ["20%", "80%", "45%", "90%"] }}
                 transition={{
@@ -61,24 +67,31 @@ const SystemStatus = () => {
 };
 
 const DataStream = () => {
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<
+    { id: number; text: string; color: string }[]
+  >([]);
 
   useEffect(() => {
     const messages = [
-      "Connecting to server...",
-      "Packet verified.",
-      "Encrypted handshake...",
-      "Access granted.",
-      "Downloading payload...",
-      "Syncing database...",
-      "Optimizing cache...",
-      "Process complete.",
+      { text: "Connecting to server...", color: "text-zinc-500" },
+      { text: "Packet verified.", color: "text-emerald-500" },
+      { text: "Encrypted handshake...", color: "text-amber-500" },
+      { text: "Access granted.", color: "text-emerald-500" },
+      { text: "Downloading payload...", color: "text-blue-500" },
+      { text: "Syncing database...", color: "text-purple-500" },
+      { text: "Optimizing cache...", color: "text-zinc-500" },
+      { text: "WARNING: High Latency", color: "text-rose-500" },
     ];
     let i = 0;
     const interval = setInterval(() => {
+      const msg = messages[i % messages.length]!;
       setLogs((prev) => [
         ...prev.slice(-6),
-        `> ${messages[i % messages.length]} ${Math.floor(Math.random() * 999)}ms`,
+        {
+          id: Date.now(),
+          ...msg,
+          text: `> ${msg.text} ${Math.floor(Math.random() * 999)}ms`,
+        },
       ]);
       i++;
     }, 800);
@@ -86,19 +99,19 @@ const DataStream = () => {
   }, []);
 
   return (
-    <div className="h-full font-mono text-xs text-zinc-500 flex flex-col">
+    <div className="h-full font-mono text-xs flex flex-col">
       <div className="text-zinc-400 border-b border-zinc-800 pb-2 mb-2">
         EVENT LOG
       </div>
       <div className="flex-1 overflow-hidden flex flex-col justify-end">
-        {logs.map((log, i) => (
+        {logs.map((log) => (
           <motion.div
-            key={i}
+            key={log.id}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="truncate"
+            className={`truncate ${log.color}`}
           >
-            {log}
+            {log.text}
           </motion.div>
         ))}
       </div>
@@ -123,7 +136,7 @@ const Radar = () => {
         animate={{ rotate: 360 }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
       >
-        <div className="w-full h-full bg-emerald-500/10 rounded-full blur-xl"></div>
+        <div className="w-full h-full bg-gradient-to-l from-emerald-500/20 to-transparent rounded-full blur-xl"></div>
       </motion.div>
       <div className="font-mono text-xs text-zinc-500 mt-20">SCANNING AREA</div>
     </div>
@@ -132,12 +145,19 @@ const Radar = () => {
 
 const HexGrid = () => {
   return (
-    <div className="h-full w-full grid grid-cols-6 gap-1 p-2 content-center opacity-30">
+    <div className="h-full w-full grid grid-cols-6 gap-1 p-2 content-center opacity-50">
       {Array.from({ length: 24 }).map((_, i) => (
         <motion.div
           key={i}
-          className="aspect-square bg-zinc-700"
-          animate={{ opacity: [0.2, 0.8, 0.2] }}
+          className="aspect-square"
+          animate={{
+            opacity: [0.2, 0.8, 0.2],
+            backgroundColor: [
+              "#3f3f46",
+              i % 5 === 0 ? "#f43f5e" : i % 3 === 0 ? "#f59e0b" : "#10b981",
+              "#3f3f46",
+            ],
+          }}
           transition={{
             duration: 2,
             delay: Math.random() * 2,
@@ -155,16 +175,16 @@ const CoreLoader = () => {
     <div className="h-full flex flex-col items-center justify-center gap-4">
       <div className="relative w-16 h-16">
         <motion.span
-          className="absolute inset-0 border-2 border-zinc-700"
+          className="absolute inset-0 border-2 border-emerald-500/30"
           animate={{ rotate: 360 }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
         />
         <motion.span
-          className="absolute inset-2 border-2 border-zinc-600"
+          className="absolute inset-2 border-2 border-emerald-500"
           animate={{ rotate: -360 }}
           transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
         />
-        <div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-zinc-300">
+        <div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-emerald-500 font-bold">
           CORE
         </div>
       </div>
@@ -195,7 +215,7 @@ function App() {
         {/* Middle Row */}
         <BentoItem className="col-span-1 row-span-2" delay={0.4}>
           <div className="h-full flex flex-col justify-end">
-            <div className="font-mono text-4xl text-zinc-200 font-bold tracking-tighter mb-2">
+            <div className="font-mono text-4xl text-emerald-500 font-bold tracking-tighter mb-2">
               01
             </div>
             <div className="font-mono text-xs text-zinc-500">SECTOR A</div>
@@ -217,7 +237,7 @@ function App() {
           delay={0.7}
         >
           <motion.div
-            className="w-12 h-1 bg-zinc-800"
+            className="w-12 h-1 bg-rose-500"
             whileHover={{ scaleX: 1.5 }}
           />
         </BentoItem>
